@@ -1,5 +1,4 @@
 
-
 public class Lause extends Anne {
 
 	private String lause;

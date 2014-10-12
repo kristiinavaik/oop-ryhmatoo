@@ -5,11 +5,11 @@ import java.util.Random;
 public class Andmed {
 	
 	private Random random;
-	protected ArrayList<Anne> andmed;
+	protected ArrayList<Ylesanne> andmed;
 	
 	public Andmed() {
 		this.random = new Random();
-		this.andmed = new ArrayList<Anne>();
+		this.andmed = new ArrayList<Ylesanne>();
 	}
 	
 	public int suvalineIndeks(int eelmineIndeks) {
@@ -20,14 +20,14 @@ public class Andmed {
 		return suvalineIndeks;
 	}
 	
-	public Anne getAnne(int indeks) {
+	public Ylesanne getAnne(int indeks) {
 		return andmed.get(indeks);
 	}
 	
 	@Override
 	public String toString() {
 		String string = "";
-		for (Anne paar : this.andmed) {
+		for (Ylesanne paar : this.andmed) {
 			string += paar + "\n";
 		}
 		return string;

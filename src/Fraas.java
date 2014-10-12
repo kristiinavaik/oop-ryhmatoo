@@ -1,6 +1,6 @@
 
 
-public class Fraas extends Anne {
+public class Fraas extends Ylesanne {
 
 	private String fraas1;
 	private boolean fraas1Korrektne;

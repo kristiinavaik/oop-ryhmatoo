@@ -6,22 +6,24 @@ public class Andmed {
 	
 	private Random random;
 	protected ArrayList<Ylesanne> andmed;
+	private int eelmineIndeks = -1;
 	
 	public Andmed() {
 		this.random = new Random();
 		this.andmed = new ArrayList<Ylesanne>();
 	}
 	
-	public int suvalineIndeks(int eelmineIndeks) {
+	public int suvalineIndeks() {
 		int suvalineIndeks = random.nextInt(andmed.size());
 		if (andmed.size() != 1 && suvalineIndeks == eelmineIndeks) {
-			return suvalineIndeks(eelmineIndeks);
+			return suvalineIndeks();
 		}
 		return suvalineIndeks;
 	}
 	
-	public Ylesanne getAnne(int indeks) {
-		return andmed.get(indeks);
+	public Ylesanne getYlesanne() {
+		eelmineIndeks = suvalineIndeks();
+		return andmed.get(eelmineIndeks);
 	}
 	
 	@Override

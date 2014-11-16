@@ -20,7 +20,7 @@ public class Laused extends Andmed {
 		}
 	}
 	
-	public Lause getLause(int indeks) {
-		return (Lause) getAnne(indeks);
+	public Lause getLause() {
+		return (Lause) getYlesanne();
 	}
 }

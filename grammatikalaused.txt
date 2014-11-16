@@ -9,6 +9,6 @@
 - kolm eelnõud |+ kolm eelnõu
 + ettevõtete kasum |- ettevõttete kasum
 - gepardide hüpped |+ gepardite hüpped
-+ värisevate lehtedega haavad | - värisevate lehtedega haabad
++ värisevate lehtedega haavad |- värisevate lehtedega haabad
 - nauditi hüvesi |+ nauditi hüvesid
 + jogurti maitse |- jogurdi maitse

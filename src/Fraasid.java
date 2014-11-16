@@ -20,8 +20,8 @@ public class Fraasid extends Andmed {
 		}
 	}
 
-	public Fraas getFraas(int indeks) {
-		return (Fraas) getAnne(indeks);
+	public Fraas getFraas() {
+		return (Fraas) getYlesanne();
 	}
 	
 }

@@ -3,7 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Laused extends Andmed {
-	
+
 	public Laused(String failiNimi) {
 		super();
 		File fail = new File(failiNimi);
@@ -19,7 +19,7 @@ public class Laused extends Andmed {
 			System.err.println("Viga, faili \"" + failiNimi + "\" ei leitud!");
 		}
 	}
-	
+
 	public Lause getLause() {
 		return (Lause) getYlesanne();
 	}

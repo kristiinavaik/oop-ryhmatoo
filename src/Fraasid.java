@@ -3,7 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Fraasid extends Andmed {
-	
+
 	public Fraasid(String failiNimi) {
 		super();
 		File fail = new File(failiNimi);
@@ -23,5 +23,5 @@ public class Fraasid extends Andmed {
 	public Fraas getFraas() {
 		return (Fraas) getYlesanne();
 	}
-	
+
 }

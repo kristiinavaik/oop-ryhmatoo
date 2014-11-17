@@ -1,8 +1,7 @@
-
 public class Lause extends Ylesanne {
 
 	private String lause;
-	
+
 	public Lause(String lause) {
 		this.lause = lause;
 	}
@@ -18,11 +17,11 @@ public class Lause extends Ylesanne {
 	public String ilmaPunktuatsioonita() {
 		return lause.replaceAll("[^A-Za-z0-9ÕõÄäÖöÜü ]", "");
 	}
-	
+
 	public boolean kontrolliVastus(String vastus) {
 		return vastus.trim().equals(lause);
 	}
-	
+
 	public String korrektneFraas() {
 		return lause;
 	}
@@ -31,5 +30,5 @@ public class Lause extends Ylesanne {
 	public String toString() {
 		return lause;
 	}
-	
+
 }

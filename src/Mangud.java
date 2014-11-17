@@ -3,11 +3,11 @@ import javafx.event.EventHandler;
 import javafx.scene.paint.Color;
 
 public class Mangud {
-	
+
 	// Harjutatavad lausete ja fraaside failide nimed on kirjas klassis Konstandid.
 	private static Laused laused = new Laused(Konstandid.KOMADEFAIL);
 	private static Fraasid fraasid = new Fraasid(Konstandid.FRAASIDEFAIL);
-	
+
 	// Õigete-valede vastuste loendur.
 	static int oiged = 0;
 	static int valed = 0;
@@ -31,9 +31,9 @@ public class Mangud {
 				Kasutajaliides.tulemusText.setFill(Color.RED);
 			}
 		}
-		
+
 		Lause lause = laused.getLause(); // juhuslik lause
-		
+
 		// Kirjutab üle kasutajaliidese teksti ja tekstivälja.
 		Kasutajaliides.valik1Text.setText(lause.ilmaPunktuatsioonita());
 		Kasutajaliides.textField.setText(lause.ilmaPunktuatsioonita());
@@ -50,7 +50,7 @@ public class Mangud {
 				}
 			}
 		});
-		
+
 		// Sama, mis nupule vajutades, toimub ka vajutades tekstisisetusväljas Enter klahvi.
 		Kasutajaliides.textField.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent arg0) {
@@ -64,7 +64,7 @@ public class Mangud {
 			}
 		});
 	}
-	
+
 	/*
 	 * Kirjavahemärkide mängu loogika
 	 */
@@ -80,13 +80,13 @@ public class Mangud {
 				Kasutajaliides.tulemusText.setFill(Color.RED);
 			}
 		}
-		
+
 		// Võtame sisse fraasiobjekti ja loeme sellest eraldi fraasid. Kuvame.
 		Fraas fraas = fraasid.getFraas();
 
 		String fraas1 = fraas.getFraas1();
 		String fraas2 = fraas.getFraas2();
-		
+
 		Kasutajaliides.valik1Text.setText("a) \"" + fraas1 + "\"");
 		Kasutajaliides.valik2Text.setText("b) \"" + fraas2 + "\"");
 
@@ -102,7 +102,7 @@ public class Mangud {
 				}
 			}
 		});
-		
+
 		Kasutajaliides.valik2Nupp.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent arg0) {
 				if (fraas.kontrolliVastus(fraas2)) {
@@ -115,5 +115,5 @@ public class Mangud {
 			}
 		});
 	}
-	
+
 }

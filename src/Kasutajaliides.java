@@ -23,13 +23,16 @@ import javafx.stage.Stage;
 public class Kasutajaliides extends Application {
 
 	public static final String PEALKIRI = "Õpime eesti keelt";
-	
+
+    // Loome kõik vajalikud graafilised elemendid (paanid, tekstid, nupud), 
+    // millele pärast lisame omadusi ja muudame nende sisu.
+
 	private static int LAIUS = 500;
 	private static int KORGUS = 300;
 	
 	private static BorderPane alusPaan = new BorderPane();
     private static GridPane grid;
-    private static MenuBar menuBar;  
+    private static MenuBar menuBar;
     
     private static Text ekraaniPealkiri = new Text();
     private static Text kirjeldus = new Text();
@@ -48,6 +51,11 @@ public class Kasutajaliides extends Application {
 		launch(args);
 	}
 
+    /**
+     * Tühi ruum "tulemusText" eraldamiseks. 
+     * Sisuliselt ühe tekstivälja padding, mis ei ole aga tekstiga seotud,
+     * vaid lisatakse enne ja pärast teksti.
+     */
 	private static Region getTyhiRuum() {
 		Region tyhiRuum = new Region();
 		tyhiRuum.setMinHeight(5);
@@ -55,7 +63,12 @@ public class Kasutajaliides extends Application {
         tyhiRuum.setPrefSize(0, 5);
         return tyhiRuum;
 	}
-	
+
+    /**
+     * GridPane'i loomine ja sellele programmis kõikjal esinevate elementide
+     * ja nende omaduste lisamine. Iga uus vaade uuendab seda meetodit
+     * pealkirja ja kirjelduse teksti argumentidega.
+     */
 	private static void initGrid(String pealkiri, String kirjeldusText) {
 		grid = new GridPane();
 	    grid.setAlignment(Pos.CENTER);
@@ -74,11 +87,12 @@ public class Kasutajaliides extends Application {
 	@Override
 	public void start(Stage pealava) throws Exception {
         menuBar = koostaMenuu();
-        manguValik();
+        manguValik(); //esimene kuvatav vaade
         
         alusPaan.setTop(menuBar);
         alusPaan.setCenter(grid);
 	    
+        // Kirjade kuju ja maksimaalne rea pikkus.
         tulemusText.setFont(Font.font(null, FontPosture.ITALIC, 14));
         tulemusText.setWrappingWidth(LAIUS - 50);
         valik1Text.setWrappingWidth(LAIUS - 50);
@@ -93,6 +107,9 @@ public class Kasutajaliides extends Application {
 		pealava.show();
 	}
 
+    /*
+     * Esimene kuvatav vaade.
+     */
 	public static void manguValik() {
 		initGrid("Palun valige harjutus", null);
 		
@@ -118,15 +135,22 @@ public class Kasutajaliides extends Application {
 
 	    vbNupud.getChildren().addAll(oigekirjaNupp, kirjavahemarkideNupp);
 	    
+        // Kuna initGrid meetod sai tulemusText väärtuseks null,
+        // lähevad nupud 2. ritta. Harjutuste ajal on tulemusText 
+        // täidetud ja uued elemendid lisanduvad 3. ja 4. reale.
 	    grid.add(vbNupud, 0, 1);
 	}
 	
+    /**
+     * Vaade tulemuse näitamiseks.
+     */
 	public static void naitaTulemust(String harjutuseNimi) {
 		initGrid(harjutuseNimi + " oli teie tulemuseks:", null);
 
 		VBox tulemused = new VBox();
 	    tulemused.setSpacing(10);
-	    
+
+        //Saab õigete ja valede vastuste arvu klassist Mangud.
 	    Text oigedText = new Text("Õigeid: " + Mangud.oiged);
 	    Text valedText = new Text("Valed: " + Mangud.valed);
 	    
@@ -138,6 +162,9 @@ public class Kasutajaliides extends Application {
 		alusPaan.setCenter(grid);
 	}
 	
+    /*
+     * Menüüriba koostamine
+     */
 	public static MenuBar koostaMenuu() {
 		MenuBar menuBar = new MenuBar();
         Menu menuHarjutused = new Menu("Mäng");
@@ -168,11 +195,16 @@ public class Kasutajaliides extends Application {
         return menuBar;
 	}
 	
+    /*
+     * Meetod õigekirja harjutamise mängu näitamiseks. 
+     * Kuvab kaks varianti fraasist, millest tuleb valida õige.
+     */
 	private static void oigekirjaHarjutus() {
 		tulemusText.setText("");
 		
 		initGrid("Õigekirjaharjutus", "Valige õige variant");
 
+        // fraaside variandid on VBox-is.
 		VBox valikud = new VBox();
 	    valikud.setSpacing(5);
 	    
@@ -187,20 +219,32 @@ public class Kasutajaliides extends Application {
 		valik2Nupp.setText("Õige on b)");
 		
 		stoppNupp.setMinSize(50, 20);
-		stoppNupp.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent arg0) {
-				naitaTulemust("Õigekirjaharjutuses");
-			}
-		});
+        // stoppNupp kutsub esile tulemuste näitamise dialoogi 
+        // ja annab talle argumendina pealkirja. Tulemused saab 
+        // naitaTulemust meetod klassist Mangud.
+        stoppNupp.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent arg0) {
+                naitaTulemust("Õigekirjaharjutuses");
+            }
+        });
+        
+        // Horisontaalselt paiknevad nupud ("Õige on a", "Õige on b", "stopp") on HBox-is, mis on lisatud gridi viimaseks reaks.
 	    HBox nupud = new HBox(20, valik1Nupp, valik2Nupp, stoppNupp);
 	    
 		grid.add(valikud, 0, 2);
 		grid.add(nupud, 0, 3);
-		alusPaan.setCenter(grid);
-		
+        alusPaan.setCenter(grid); // Grid on joondatud aluspaani keskele, tänu millele jääb akna suurust muutes alati akna keskele.
+
 	    Mangud.mangiOigekirjaMangu(null, false);
 	}
     
+    /*
+     * Meetod kirjavahemärkide harjutamise mängu näitamiseks. 
+     * Kuvab kirjavahemärkideta lause ja laseb tekstisisetsuskastis
+     * lisada sellele lausele kirjavahemärke.
+     * Kujunduselt sarnane õigekirja harjutusega, erinevusteks 
+     * ühe võrra vähem nuppe ja tekstisisetuskast.
+     */
 	private static void kirjavahemarkideHarjutus() {
 		tulemusText.setText("");
 		
@@ -210,7 +254,9 @@ public class Kasutajaliides extends Application {
 		tekstid.setSpacing(5);
 		
 	    valik1Text.setFont(Font.font(14));
-	    textField.setFont(Font.font(14));
+        // kast teksti sisestuseks. Selles kuvab programm kirjavahemärkideta kirjutatud lause. Lause määrab klass Mangud.
+        textField.setFont(Font.font(14));
+
 	    
 	    tekstid.getChildren().addAll(getTyhiRuum(), tulemusText, getTyhiRuum(), valik1Text, textField);
 	    
@@ -228,6 +274,7 @@ public class Kasutajaliides extends Application {
 		grid.add(nupud, 0, 3);
 		alusPaan.setCenter(grid);
 		
+        // käivitame mängu loogika
 	    Mangud.mangiKirjavahemarkideMangu(null, false);
 	}
 }

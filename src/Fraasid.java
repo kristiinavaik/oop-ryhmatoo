@@ -1,27 +1,22 @@
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.util.Scanner;
 
 public class Fraasid extends Andmed {
 
 	public Fraasid(String failiNimi) {
 		super();
 		File fail = new File(failiNimi);
-		String rida;
-		BufferedReader br;
-		
+		Scanner sc;	//loen faili sisse ja salvestan fraasid järjendisse
 		try {
-			br = new BufferedReader(new FileReader(fail)); //Kui fail on olemas, loen puhvrisse ja salvestan listi.
-			while ((rida = br.readLine()) != null){
+			sc = new Scanner(fail);
+			while (sc.hasNextLine()) {
+				String rida = sc.nextLine();
 				this.andmed.add(new Fraas(rida));
 			}
-			br.close();
-		} catch (FileNotFoundException e){
+			sc.close();
+		} catch (FileNotFoundException e) {
 			System.err.println("Viga, faili \"" + failiNimi + "\" ei leitud!");
-		} catch (IOException ioe) {
-			System.err.println("Lugemisviga failist \"" + failiNimi + "\"!");
 		}
 	}
 

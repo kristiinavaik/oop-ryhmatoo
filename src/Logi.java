@@ -3,8 +3,11 @@ import java.io.*;
 public class Logi {
 
 	public static final String LOGIFAIL = "logi.txt"; 	
-		
-	public void resetLog(){ //taastab logifaili algse kuju
+
+	 /*
+	  * taastab logifaili algse kuju
+	  */
+	public void resetLog() {
 		FileWriter out;
 		try {
 			out = new FileWriter(LOGIFAIL);
@@ -14,11 +17,12 @@ public class Logi {
 		}
 	}
 	
-//	 Sõltuvalt harjutusest saavad järgnevad kaks meetodit
-//	 sobivad argumendid, et teada, mida kirjutada õigeks
-//	 ja mida valeks vastuseks.
-	
-	public void kirjutaKirjavahemarkideManguLogi(Lause lause){ //
+	/*
+	 * Sõltuvalt harjutusest saavad järgnevad kaks meetodit
+	 * sobivad argumendid, et teada, mida kirjutada õigeks
+	 * ja mida valeks vastuseks.
+	 */
+	public void kirjutaKirjavahemarkideManguLogi(Lause lause) {
 		try {
 			FileWriter out = new FileWriter(LOGIFAIL, true);
 			out.write("Teie vastus: " + Kasutajaliides.textField.getText() + "\n");
@@ -40,25 +44,27 @@ public class Logi {
 		}
 	}
 	
-	public String loeLogi(){ //loeb failist andmed ühte stringi
+	/*
+	 * loeb failist andmed ühte stringi
+	 */
+	public String loeLogi(){
 		//StringBuider on vajalik järjestikuseks lisamiseks .append käsuga.
 		StringBuilder vigasedLaused = new StringBuilder();
 		String rida;
 		
 	    try {
 	    	BufferedReader fr = new BufferedReader(new FileReader(LOGIFAIL));
-	    		while ((rida = fr.readLine()) != null) {
+	    	while ((rida = fr.readLine()) != null) {
 				vigasedLaused.append(rida);
 				vigasedLaused.append(System.getProperty("line.separator"));
 			}
-	    		fr.close();
+	    	fr.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	    
-	    String logist = vigasedLaused.toString();
-		return logist;
+		return vigasedLaused.toString();
 	}
 }

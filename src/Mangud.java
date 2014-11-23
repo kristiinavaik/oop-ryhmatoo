@@ -19,7 +19,7 @@ public class Mangud {
 	static void kontrolliKirjavahemarkideMangu(Lause lause){
 		// Kuna mängu kontroll võib toimuda kahes kohas,
 		// on mõttekas see tuua eraldi meetodisse. 
-		if (Kasutajaliides.textField.getText().length()  <= lause.ilmaPunktuatsioonita().length()){
+		if (Kasutajaliides.textField.getText().length() <= lause.ilmaPunktuatsioonita().length()) {
 			// kontrollin, kas kasutaja on üldse midagi teinud.
 			// Kui ei ole või vastus on antud lausest lühem, ei arvesta vastust.			
 			Kasutajaliides.tulemusText.setFill(Color.RED);
@@ -36,14 +36,15 @@ public class Mangud {
 		}
 	}
 	
+
 	static void mangiKirjavahemarkideMangu(String eelmineTulemus, boolean oige) {
-		// Kui esimeseks argumendiks on null, tähendab see, et harjutus on
-		// käivitatud esimest korda või uuesti, nii et tuleb nullida loendur
-		// ja mitte saata midagi tulemusText tekstiks. Pärast esimest korda
-		// saadab käivitab see sama klass iseenda uute argumentidega, millest
-		// esimeses on eelmise vastuse kohta käiv tekst. Selle värv sõltub
-		// teisest argumendist: true õige vastuse ja 
-		// false vale vastuse korral
+//		Kui esimeseks argumendiks on null, tähendab see, et harjutus on
+//		käivitatud esimest korda või uuesti, nii et tuleb nullida loendur
+//		ja mitte saata midagi tulemusText tekstiks. Pärast esimest korda
+//		saadab käivitab see sama klass iseenda uute argumentidega, millest
+//		esimeses on eelmise vastuse kohta käiv tekst. Selle värv sõltub
+//		teisest argumendist: true õige vastuse ja 
+//		false vale vastuse korral
 		if (eelmineTulemus == null) {
 			oiged = 0;
 			valed = 0;
@@ -79,7 +80,7 @@ public class Mangud {
 	}
 
 	/*
-	 * Kirjavahemärkide mängu loogika
+	 * Õigekirjamängu loogika
 	 */
 	static void mangiOigekirjaMangu(String eelmineTulemus, boolean oige) {
 		if (eelmineTulemus == null) {

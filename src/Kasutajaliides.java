@@ -1,12 +1,14 @@
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -40,8 +42,10 @@ public class Kasutajaliides extends Application {
 	static Text valik1Text = new Text();
 	static Text valik2Text = new Text();
 	static Text tulemusText = new Text();
+    static Text logiText = new Text();
 
 	static TextField textField = new TextField();
+    static ScrollPane sp = new ScrollPane();
 
 	static Button valik1Nupp = new Button();
 	static Button valik2Nupp = new Button();
@@ -73,7 +77,9 @@ public class Kasutajaliides extends Application {
 		grid = new GridPane();
 		grid.setAlignment(Pos.CENTER);
 		grid.setVgap(10);
+		grid.setPadding(new Insets(10, 0, 10, 0));
 
+		
 		ekraaniPealkiri.setText(pealkiri);
 		ekraaniPealkiri.setFont(Font.font(null, FontWeight.BOLD, 16));
 		grid.add(ekraaniPealkiri, 0, 0);
@@ -98,6 +104,8 @@ public class Kasutajaliides extends Application {
 		valik1Text.setWrappingWidth(LAIUS - 50);
 		valik2Text.setWrappingWidth(LAIUS - 50);
 		textField.setMaxWidth(LAIUS - 50);
+        logiText.setWrappingWidth(LAIUS-150);
+
 
 		Scene stseen = new Scene(alusPaan, LAIUS, KORGUS);
 		pealava.setScene(stseen);
@@ -159,6 +167,16 @@ public class Kasutajaliides extends Application {
 		tulemused.getChildren().addAll(oigedText, valedText);
 
 		grid.add(tulemused, 0, 1);
+		
+		// Kui on valesid vastuseid, loeme nad logist sisse ja kuvame keritavas aknas.
+		if (Mangud.valed > 0){
+			Logi log = new Logi();
+		    logiText.setText(log.loeLogi());
+		    ScrollPane sp = new ScrollPane(logiText);
+		    sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+			grid.add(sp, 0, 2);
+		}
+		
 		alusPaan.setCenter(grid);
 	}
 

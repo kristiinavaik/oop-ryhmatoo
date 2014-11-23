@@ -1,22 +1,27 @@
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class Laused extends Andmed {
 
 	public Laused(String failiNimi) {
 		super();
 		File fail = new File(failiNimi);
-		Scanner sc;	//loen faili sisse ja salvestan fraasid järjendisse
+		String rida;
+		BufferedReader br;
+		
 		try {
-			sc = new Scanner(fail);
-			while (sc.hasNextLine()) {
-				String rida = sc.nextLine();
+			br = new BufferedReader(new FileReader(fail)); //Kui fail on olemas, loen puhvrisse ja salvestan listi.
+			while ((rida = br.readLine()) != null){
 				this.andmed.add(new Lause(rida));
 			}
-			sc.close();
-		} catch (FileNotFoundException e) {
+			br.close();
+		} catch (FileNotFoundException e){
 			System.err.println("Viga, faili \"" + failiNimi + "\" ei leitud!");
+		} catch (IOException ioe) {
+			System.err.println("Lugemisviga failist \"" + failiNimi + "\"!");
 		}
 	}
 

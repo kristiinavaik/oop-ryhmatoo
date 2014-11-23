@@ -8,10 +8,34 @@ public class Mangud {
 	private static Laused laused = new Laused(Konstandid.KOMADEFAIL);
 	private static Fraasid fraasid = new Fraasid(Konstandid.FRAASIDEFAIL);
 
+	// Logitegemine on klassis Logi. Teen sellest uue isendi.
+	private static Logi log = new Logi();
+
+	
 	// Õigete-valede vastuste loendur.
 	static int oiged = 0;
 	static int valed = 0;
 
+	static void kontrolliKirjavahemarkideMangu(Lause lause){
+		// Kuna mängu kontroll võib toimuda kahes kohas,
+		// on mõttekas see tuua eraldi meetodisse. 
+		if (Kasutajaliides.textField.getText().length()  <= lause.ilmaPunktuatsioonita().length()){
+			// kontrollin, kas kasutaja on üldse midagi teinud.
+			// Kui ei ole või vastus on antud lausest lühem, ei arvesta vastust.			
+			Kasutajaliides.tulemusText.setFill(Color.RED);
+			Kasutajaliides.tulemusText.setText("Sisestasite antust lühema teksti või ei lisanud midagi!");
+		}
+		else if (lause.kontrolliVastus(Kasutajaliides.textField.getText())) {
+			oiged++;
+			mangiKirjavahemarkideMangu("Tubli, \"" + lause.getFraas1() + "\" on õige vastus!", true);
+		} else {
+			// vale vastuse puhul kirjutan antud vastuse ja õige vastuse logisse.
+			log.kirjutaKirjavahemarkideManguLogi(lause);
+			valed++;
+			mangiKirjavahemarkideMangu("Vastasite valesti, õige vastus on \"" + lause.getFraas1() + "\"!", false);
+		}
+	}
+	
 	static void mangiKirjavahemarkideMangu(String eelmineTulemus, boolean oige) {
 		// Kui esimeseks argumendiks on null, tähendab see, et harjutus on
 		// käivitatud esimest korda või uuesti, nii et tuleb nullida loendur
@@ -23,6 +47,7 @@ public class Mangud {
 		if (eelmineTulemus == null) {
 			oiged = 0;
 			valed = 0;
+			log.resetLog(); // Kustutan logifaili sisu.
 		} else {
 			Kasutajaliides.tulemusText.setText(eelmineTulemus);
 			if (oige) {
@@ -41,26 +66,14 @@ public class Mangud {
 		// nupule vajutades käivitub sama meetod uute argumentidega.
 		Kasutajaliides.valik1Nupp.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent arg0) {
-				if (lause.kontrolliVastus(Kasutajaliides.textField.getText())) {
-					oiged++;
-					mangiKirjavahemarkideMangu("Tubli, \"" + lause.getFraas1() + "\" on õige vastus!", true);
-				} else {
-					valed++;
-					mangiKirjavahemarkideMangu("Vastasite valesti, õige vastus on \"" + lause.getFraas1() + "\"!", false);
-				}
+				kontrolliKirjavahemarkideMangu(lause);
 			}
 		});
 
 		// Sama, mis nupule vajutades, toimub ka vajutades tekstisisetusväljas Enter klahvi.
 		Kasutajaliides.textField.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent arg0) {
-				if (lause.kontrolliVastus(Kasutajaliides.textField.getText())) {
-					oiged++;
-					mangiKirjavahemarkideMangu("Tubli, \"" + lause.getFraas1() + "\" on õige vastus!", true);
-				} else {
-					valed++;
-					mangiKirjavahemarkideMangu("Vastasite valesti, õige vastus on \"" + lause.getFraas1() + "\"!", false);
-				}
+				kontrolliKirjavahemarkideMangu(lause);
 			}
 		});
 	}
@@ -72,6 +85,7 @@ public class Mangud {
 		if (eelmineTulemus == null) {
 			oiged = 0;
 			valed = 0;
+			log.resetLog();
 		} else {
 			Kasutajaliides.tulemusText.setText(eelmineTulemus);
 			if (oige) {
@@ -97,6 +111,7 @@ public class Mangud {
 					oiged++;
 					mangiOigekirjaMangu("Tubli, \"" + fraas1 + "\" on õige vastus!", true);
 				} else {
+					log.kirjutaOigekirjaManguLogi(fraas1, fraas2);
 					valed++;
 					mangiOigekirjaMangu("Vastasite valesti, õige vastus on \"" + fraas2 + "\"!", false);
 				}
@@ -109,6 +124,7 @@ public class Mangud {
 					oiged++;
 					mangiOigekirjaMangu("Tubli, \"" + fraas2 + "\" on õige vastus!", true);
 				} else {
+					log.kirjutaOigekirjaManguLogi(fraas2, fraas1);
 					valed++;
 					mangiOigekirjaMangu("Vastasite valesti, õige vastus on \"" + fraas1 + "\"!", false);
 				}
